@@ -73,11 +73,6 @@ function [model, progress] = solverSPFW(param, options)
 %               objective, and training error (makes the code about 3x
 %               slower given the extra two passes through data).
 %               (default: 0)
-%   do_linesearch
-%               Boolean flag whether to use line-search. (default: 1)
-%   time_budget Number of minutes after which the algorithm should terminate.
-%               Useful if the solver is run on a cluster with some runtime
-%               limits. (default: inf)
 %   test_data   Struct with two fields: patterns and labels, which are cell
 %               arrays of the same form as the training data. If provided the
 %               logging will also evaluate the test error.
@@ -122,40 +117,30 @@ else
 end
 
 % general initializations
-lambda = options.lambda;
-beta = options.beta;
-alpha = options.alpha;
-phi1 = phi(param, patterns{1}, labels{1}); % use first example to determine dimension
-d = length(phi1) % dimension of feature mapping
+lambda                = options.lambda;
+beta                  = options.beta;
+alpha                 = options.alpha;
+phi1                  = phi(param, patterns{1}, labels{1}); % use first example to determine dimension
+d                     = length(phi1) % dimension of feature mapping
 using_sparse_features = issparse(phi1);
-progress = [];
-f_star = 0;
+progress              = [];
+f_star                = 0;
 if options.solution
     model.w = options.w_star;
     for i = 1:n
         % solve the loss-augmented inference for point i
-        ystar_i = maxOracle(param, model, patterns{i}, labels{i});
-
+        ystar_i = maxOracle(param, model, patterns{i}, labels{i})
         % define the update quantities:
         % [note that lambda*w_s is subgradient of 1/n*H_i(w) ]
         % psi_i(y) := phi(x_i,y_i) - phi(x_i, y)
-        psi_i =   phi(param, patterns{i}, labels{i}) ...
-                - phi(param, patterns{i}, ystar_i);
+        psi_i  =  phi(param, patterns{i}, labels{i}) ...
+                 - phi(param, patterns{i}, ystar_i);
         loss_i = loss(param, labels{i}, ystar_i);
         f_star = f_star + 1/n * (loss_i - psi_i'*model.w);
-        % sanity check, if this assertion fails, probably there is a bug in the
     end
 end
 % === Initialization ===
 % set w to zero vector
-% (corresponds to setting all the mass of each dual variable block \alpha_(i)
-% on the true label y_i coordinate [i.e. \alpha_i(y) =
-% Kronecker-delta(y,y_i)] using notation from Appendix E of paper).
-
-% w: d x 1: store the current parameter iterate
-% wMat: d x n matrix, wMat(:,i) is storing w_i (in Alg. 4 notation) for example i.
-%    Using implicit dual variable notation, we would have w_i = A \alpha_[i]
-%    -- see section 5, "application to the Structural SVM"
 if using_sparse_features
     model.w = sparse(d,1);
     model.w_y = sparse(d,1);
@@ -168,13 +153,13 @@ else
 end
 
 model.ell = 0; % this is \ell in the paper. Here it is assumed that at the true label, the loss is zero
-         % Implicitly, we have ell = b' \alpha
+ % Implicitly, we have ell = b' \alpha
 
 % logging
-progress.primal = [];
-progress.dual = [];
-progress.gap = [];
-progress.eff_pass = [];
+progress.primal      = [];
+progress.dual        = [];
+progress.gap         = [];
+progress.eff_pass    = [];
 progress.train_error = [];
 if (isstruct(options.test_data) && isfield(options.test_data, 'patterns'))
     progress.test_error = [];
@@ -188,23 +173,20 @@ end
 fprintf('running batch FW on %d examples. The options are as follows:\n', length(patterns));
 options
 
-tic();
-
-
 % === Main loop ====
 for p=1:options.num_passes
     k = p-1; % same k as in paper
 
 
     if using_sparse_features
-        w_s = sparse(d,1);
+        w_s   = sparse(d,1);
         w_y_s = sparse(d,1);
     else
-        w_s = zeros(d,1);
+        w_s   = zeros(d,1);
         w_y_s = zeros(d,1);
     end
     ell_s = 0;
-    f = 0;
+    f     = 0;
     for i = 1:n
 
         % solve the loss-augmented inference for point i
@@ -213,37 +195,29 @@ for p=1:options.num_passes
         % define the update quantities:
         % [note that lambda*w_s is subgradient of 1/n*H_i(w) ]
         % psi_i(y) := phi(x_i,y_i) - phi(x_i, y)
-        psi_i =   phi(param, patterns{i}, labels{i}) ...
-                - phi(param, patterns{i}, ystar_i);
-        w_y_s = w_y_s + 1/n * psi_i;
-        loss_i = loss(param, labels{i}, ystar_i);
-        ell_s = ell_s + 1/n*loss_i;
-        f = f + 1/n*(loss_i - psi_i'*model.w);
+        psi_i   =  phi(param, patterns{i}, labels{i}) ...
+                   - phi(param, patterns{i}, ystar_i);
+        w_y_s   = w_y_s + 1/n * psi_i;
+        loss_i  = loss(param, labels{i}, ystar_i);
+        ell_s   = ell_s + 1/n*loss_i;
+        f       = f + 1/n*(loss_i - psi_i'*model.w);
         % sanity check, if this assertion fails, probably there is a bug in the
         % maxOracle or in the featuremap
         assert((loss_i - model.w'*psi_i) >= -1e-12);
     end
     %w_y = Ay_s
-    % t he true w_s only contains the opposite of the biggest (in absolute value) coordinate times beta
-    w_y = model.w_y;
-    [~,i] = max(abs(w_y-lambda*model.w));
-    w_s(i) = beta*sign(w_y(i));
+    % The true w_s only contains the opposite of the biggest (in absolute value) coordinate times beta
+    w_y    = model.w_y;
+    [~,i]  = max(abs(w_y - lambda * model.w));
+    w_s(i) = beta * sign(w_y(i));
     assert(sum(abs(w_s))<=beta)
     % compute duality gap:
-    gap_w = -(model.w-w_s)'*(w_y-lambda*model.w);
-    gap_y = ell_s -  model.ell -  model.w'* (w_y_s - model.w_y);
-    gap = gap_w + gap_y;    % keyboard
+    gap_w  = - (model.w - w_s)' * (w_y - lambda * model.w);
+    gap_y  = ell_s -  model.ell -  model.w' * (w_y_s - model.w_y);
+    gap    = gap_w + gap_y;
     % get the step-size gamma:
-    %%%% !!!! No line search for saddle points
     % we use the fixed step-size schedule
-
-    gamma = alpha/(k+alpha);
-    % We use the adaptative and asymetric step size
-    % C = 2*beta*(lambda + 1./lambda);
-    % gamma_w = min(gap_w./(2*C),1);
-    % gamma_y = min(gap_y./(20*C),1) ;
-    % % gamma_y = gamma;
-    % gamma_w = gamma;
+    gamma = alpha / (k + alpha);
 
     % stop if duality gap is below threshold:
     if gap <= options.gap_threshold
@@ -251,13 +225,8 @@ for p=1:options.num_passes
         fprintf('current gap: %g, gap_threshold: %g\n', gap, options.gap_threshold)
         fprintf('Reached at iteration %d.\n', k)
         break % exit loop!
-    % elseif  (options.debug && mod(k,options.debug_iter)==0)
-    %     fprintf('Duality gap check: gap = %g at iteration %d\n', gap, k);
     end
     % finally update the weights and ell variables
-    %check If we do a away step
-
-    %
     model.w_y = (1-gamma)*model.w_y   + gamma*w_y_s;
     model.w   = (1-gamma)*model.w   + gamma*w_s;
     model.ell = (1-gamma)*model.ell + gamma*ell_s;
@@ -266,37 +235,13 @@ for p=1:options.num_passes
     % timing the optimization, since it is very costly!
     if (options.debug)
         progress.gap = [progress.gap; gap];
-        %%compute L(w^k,y^*) - L(w^*,y^k) =
+        %%compute L(w^k,\hat y^k) - L(w^*,y^*) = f(w^k) - f^*
         % primal error induced in the primal problem
         if options.solution
             prim = f - f_star;
             progress.primal = [progress.primal; prim];
         end
-        % primal = -objective_function(model.w, model.w_y,model.ell);
-        % % gap = duality_gap(param, maxOracle, model, lambda);
-        % % primal = f+gap; % a cheaper alternative to get the primal value
-        % train_error = average_loss(param, maxOracle, model);
-        % fprintf('pass %d (iteration %d), SVM primal = %f, duality gap = %f, train_error = %f \n', ...
-        %     p, k+1, primal, gap, train_error);
-
-        % progress.primal = [progress.primal; primal];
-        % % progress.dual = [progress.dual; f];
         progress.eff_pass = [progress.eff_pass; k];
-        % progress.train_error = [progress.train_error; train_error];
-        % if (isstruct(options.test_data) && isfield(options.test_data, 'patterns'))
-        %     param_debug = param;
-        %     param_debug.patterns = options.test_data.patterns;
-        %     param_debug.labels = options.test_data.labels;
-        %     test_error = average_loss(param_debug, maxOracle, model);
-        %     progress.test_error = [progress.test_error; test_error];
-        % end
-    end
-
-    % time-budget exceeded?
-    t_elapsed = toc();
-    if (t_elapsed/60 > options.time_budget)
-        fprintf('time budget exceeded.\n');
-        return
     end
 end
 
@@ -305,13 +250,11 @@ end % solverFW
 
 function options = defaultOptions(n)
 
-options = [];
-options.num_passes = 200;
-options.do_line_search = 1;
-options.time_budget = inf;
-options.debug = 0;
-options.lambda = 1/n;
-options.test_data = [];
-options.gap_threshold = 0.1;
+options                = [];
+options.num_passes     = 200;
+options.debug          = 0;
+options.lambda         = 1 / n;
+options.test_data      = [];
+options.gap_threshold  = 0.1;
 
 end % defaultOptions

@@ -1,12 +1,15 @@
 function [P]=edmonds2(W,b)
 %
-% function [P]=edmonds2(W,b)
+% Given a weight matrix W, this function runs unipartite Edmonds' algorithm
+% b times, each time removing used edges to get a b-matching.
+% ====================== TO DO FIRST =========================
+%             DOWNLOAD KOLMOGOROV blossomV ALGORITHM
+%             AND CHANGE line 14 
+% ============================================================
+% Inputs:
+%   W: n x n symetric matrix
+%   b: The function returns a b-matching
 %
-% Given a weight matrix, runs unipartite Edmonds' algorithm
-% b times, each time removing used edges to get a b-matching
-%
-% W=rand(n,n);W=max(W,W');W=W-diag(diag(W));P=edmonds(W,b);P2=edmonds2(W,b);[sum(sum(P.*W)) sum(sum(P2.*W))]
-% 
 
 zz = pwd;
 cd ~/Documents/MATLAB/blossomV % Put your directory here
@@ -19,7 +22,6 @@ W1 = W;
 P  = zeros(size(W));
 
 for iter=1:b
-  
   nedges=0;
   for i=1:n
     for j=(i+1):n
@@ -40,12 +42,12 @@ for iter=1:b
   end
   fclose(fid);
   system('./blossom5 -V -e GRAPH.txt -w OUTPUT.txt');
-  Ps=load('OUTPUT.txt');
-  Ps=Ps+1;
+  Ps = load('OUTPUT.txt');
+  Ps = Ps + 1;
   P1 = zeros(size(W1));
   for i=2:size(Ps,1)
-    P1(Ps(i,1),Ps(i,2))=1;
-    P1(Ps(i,2),Ps(i,1))=1;
+    P1(Ps(i,1),Ps(i,2)) = 1;
+    P1(Ps(i,2),Ps(i,1)) = 1;
   end
   P = max(P,P1);
 end

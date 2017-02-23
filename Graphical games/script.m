@@ -65,4 +65,4 @@ for n = nn
 	BIG{end+1}      = 1:niter;
 	iter            = iter + 1;
 end
-plot(BIG,1:iter)
+plot(BIG)

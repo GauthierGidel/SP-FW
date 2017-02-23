@@ -5,11 +5,13 @@
 
 clear W
 rng(2);
-niter = 100;
-BIG   = {};
-iter  = 1;
-nn    = [2.^(2:8)];
-dd    = nn .* (nn-1)./2;
+niter     = 100;
+BIG       = {};
+Legend    = {}
+iter      = 1;
+power_max = 8
+nn        = [2.^(2:power_max)];
+dd        = nn .* (nn-1)./2;
 for n = nn
 	n; %number of students
 	% We set random benefit for each student in each university
@@ -62,7 +64,12 @@ for n = nn
 	epsilon = .01;
 	[X,Y,gkhistory] = spfw(W,n,epsilon,niter);
 	BIG{end+1}      = gkhistory;
-	BIG{end+1}      = 1:niter;
 	iter            = iter + 1;
+	Legend{end+1}		= sprintf('d= %d', n .* (n-1) ./ 2);
 end
-plot(BIG)
+loglog(BIG{1},1:niter,'DisplayName',Legend{1})
+hold on
+for i =2:power_max-1
+	loglog(BIG{i},1:niter,'DisplayName',Legend{i})
+end
+legend('show')

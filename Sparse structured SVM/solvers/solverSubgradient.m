@@ -7,7 +7,7 @@ function [model, progress] = solverSPFW(param, options)
 % notation. Each step of the method calls the decoding oracle (i.e. the
 % loss-augmented predicion) for all points.
 %
-% All our code is largely inspired from the code of BCFW algorithm
+% A large part of our code comes from the code of BCFW algorithm
 % [BCFW](https://github.com/ppletscher/BCFWstruct)
 % see also (Lacoste-Julien, Jaggi, Schmidt, Pletscher; ICML
 % 2013)

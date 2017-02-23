@@ -8,7 +8,7 @@ function [model, progress] = solverBCSPFW(param, options)
 % notation. Each step of the method calls the decoding oracle (i.e. the
 % loss-augmented predicion) for all points.
 %
-% All our code is largely inspired from the code of BCFW algorithm
+% A large part of our code comes from the code of BCFW algorithm
 % [BCFW](https://github.com/ppletscher/BCFWstruct)
 % see also (Lacoste-Julien, Jaggi, Schmidt, Pletscher; ICML
 % 2013)
@@ -272,9 +272,9 @@ for p=1:options.num_passes
           model.w = w;
         end
         %%compute L(w^k,\hat y^k) - L(w^*,y^*) = f(w^k) - f^*
-        prim = f - f_star;
         progress.gap = [progress.gap; gap_total];
         if options.solution ==1
+            prim = f - f_star;
             progress.primal = [progress.primal; prim];
         end
         progress.eff_pass = [progress.eff_pass; k/n];

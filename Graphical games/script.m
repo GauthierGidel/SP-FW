@@ -1,3 +1,8 @@
+% ====================== TO DO FIRST =========================
+%             DOWNLOAD KOLMOGOROV blossomV ALGORITHM
+%             AND CHANGE line 15 in edmonds2.m
+% ============================================================
+
 clear W
 rng(2);
 niter = 100;

@@ -36,7 +36,7 @@ beta                   = 0.01;
 options.solution = 0;
 options.debug    = 1;
 options.average  = 0;
-options.beta     = BB(1);
+options.beta     = beta;
 param.stepsize   = 1;
 
 [model, progress] = solverSP_BCFW(param, options);

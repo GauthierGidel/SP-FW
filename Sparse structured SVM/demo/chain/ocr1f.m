@@ -1,4 +1,4 @@
-% Applies the structured SVM to the OCR dataset by Ben Taskar. The structured
+% Run structured SVM on the OCR dataset by Ben Taskar. The structured
 % model considered here is the standard chain graph, with the pixel values of
 % the digit as unary features and a transition matrix of size num_states^2 as
 % a pairwise potential. Additionally, we include a unary bias term for the first
@@ -10,7 +10,7 @@ addpath('helpers');
 data_name = 'ocr';
 [patterns_train, labels_train, patterns_test, labels_test] = loadOCRData(data_name, '../../data/');
 
-%% == run one of the solvers on the problem
+%% ===== run one of the solvers on the problem to get an approximate solution =====
 
 % create problem structure:
 subset_size = 100;

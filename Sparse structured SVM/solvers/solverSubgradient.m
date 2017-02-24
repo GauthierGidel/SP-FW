@@ -2,7 +2,7 @@ function [model, progress] = solverSPFW(param, options)
 % [model, progress] = solverFW(param, options)
 %
 % Solves the structured support vector machine (SVM) using subgradient
-% descent (SGD), see (Gidel, Jebara, Lacoste Julien, 2016) for more details.
+% descent (SGD), see (Gidel, Jebara, Lacoste Julien, 2016) for more details (link below).
 % This is Algorithm 2 in the paper, and the code here follows a similar
 % notation. Each step of the method calls the decoding oracle (i.e. the
 % loss-augmented predicion) for all points.
@@ -205,7 +205,7 @@ for p=1:options.num_passes
     h =0.1 ./ (L .* sqrt(1 + k));
     model.w   = proj_l1_ball(model.w  - h*g_w,beta);
     % debug: compute primal error. do not use this flag for
-    % timing the optimization, since it is very costly!
+    % timing the optimization, since it more costly!
     if (options.debug)
         if options.solution
           primal          = f - f_star;

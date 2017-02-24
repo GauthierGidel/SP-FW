@@ -2,7 +2,7 @@ function [model, progress] = solverSPFW(param, options)
 % [model, progress] = solverFW(param, options)
 %
 % Solves the structured support vector machine (SVM) using Stochastic subgradient
-% descent (SSG), see (Gidel, Jebara, Lacoste Julien, 2016) for more details.
+% descent (SSG), see (Gidel, Jebara, Lacoste Julien, 2016) for more details (link below).
 % This is Algorithm 2 in the paper, and the code here follows a similar
 % notation. Each step of the method calls the decoding oracle (i.e. the
 % loss-augmented predicion) for all points.

@@ -1,6 +1,3 @@
-% the library prettyplot needs to be loaded
-addpath('~/Documents/MATLAB/export_fig-master')
-addpath('~/Documents/MATLAB/prettyPlot')
 % seed for reproductibility
 rng(2)
 

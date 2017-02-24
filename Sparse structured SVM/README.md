@@ -1,15 +1,15 @@
 #SP-FWstruct
 
-This README mainly comes from ```https://github.com/ppletscher/BCFWstruct```
+This README and its associated code mainly comes from ```https://github.com/ppletscher/BCFWstruct```
 
 The code is organized as follows:
-* `solvers` contains the optimization methods, including the saddle point block-coordinate 
+* `solvers` contains the optimization methods, including the saddle point block-coordinate
   Frank-Wolfe solver (SP-BCFW). If you want to use SP-BCFW in your project, you most
   likely only need to run an `addpath(genpath('solvers'))` in your Matlab sources.
 * `demos` contains the application-dependent code, such as MAP decoding or the
   feature map computation. The source code includes a sequence prediction demo
   for optical character recognition (OCR).
-* `data` is initally empty, it is used to store the data files required for the
+* `data` is initially empty, it is used to store the data files required for the
   demos.
 
 
@@ -36,8 +36,3 @@ prediction problem, you will need to implement three functions:
 You can find an example implementation in the `demo/chain` folder. For an
 overview of the exact usage and the supported options, please check the Matlab
 documentation of the solvers.
-
-
-##Octave Support
-
-The code also works with [Octave](http://www.octave.org), this was tested with Octave 3.6.4. In order to get the progress update working, we recommend running `more off` before calling our structured SVM solvers.

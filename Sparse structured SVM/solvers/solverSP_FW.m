@@ -232,7 +232,7 @@ for p=1:options.num_passes
     model.ell = (1-gamma)*model.ell + gamma*ell_s;
 
     % debug: compute objective and duality gap. do not use this flag for
-    % timing the optimization, since it is very costly!
+    % timing the optimization, since it is more costly!
     if (options.debug)
         progress.gap = [progress.gap; gap];
         %%compute L(w^k,\hat y^k) - L(w^*,y^*) = f(w^k) - f^*

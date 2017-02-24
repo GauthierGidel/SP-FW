@@ -3,7 +3,4 @@ This experiment correspond to figure (1d) in [our paper](https://arxiv.org/abs/1
  - `script.m` plots the figure.
  - `spfw.m` calls the saddle point Frank-Wolfe algorithm.
  - `edmond2.m` is the oracle function. This program uses [BlossomV](http://pub.ist.ac.at/~vnk/software.html), [KOLMOGOROV](http://pub.ist.ac.at/~vnk/)'s implementation of the blossom algorithm.
- In order to use the code you have to run the script `get_blossom.sh`. It can be done running
- ~~~
- bash get_blossom.sh
- ~~~
+ In order to use the code you have to run `bash get_blossom.sh`.

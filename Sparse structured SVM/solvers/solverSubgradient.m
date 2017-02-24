@@ -213,6 +213,7 @@ for p=1:options.num_passes
         end
         progress.eff_pass = [progress.eff_pass; k];
     end
+end
 end %Function
 
 function options = defaultOptions(n)

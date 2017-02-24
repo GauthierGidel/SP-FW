@@ -226,7 +226,7 @@ for p=1:options.num_passes
       end
         progress.gap = [progress.gap; gap];
         progress.eff_pass = [progress.eff_pass; k/n];
-end
+    end
 end
 
 end %Function

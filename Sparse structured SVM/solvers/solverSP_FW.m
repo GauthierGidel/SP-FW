@@ -129,7 +129,7 @@ if options.solution
     model.w = options.w_star;
     for i = 1:n
         % solve the loss-augmented inference for point i
-        ystar_i = maxOracle(param, model, patterns{i}, labels{i})
+        ystar_i = maxOracle(param, model, patterns{i}, labels{i});
         % define the update quantities:
         % [note that lambda*w_s is subgradient of 1/n*H_i(w) ]
         % psi_i(y) := phi(x_i,y_i) - phi(x_i, y)

@@ -4,7 +4,7 @@ function [P]=edmonds2(W,b)
 % b times, each time removing used edges to get a b-matching.
 % ====================== TO DO FIRST =========================
 %             DOWNLOAD KOLMOGOROV blossomV ALGORITHM
-%             and put it in Graphical Games Directory
+%                   running get_blossom.sh
 % ============================================================
 % Inputs:
 %   W: n x n symetric matrix
@@ -12,7 +12,6 @@ function [P]=edmonds2(W,b)
 %
 
 zz = pwd;
-% cd ../blossomV % Put your directory here
 n  = size(W,1);
 W  = W-diag(diag(W));
 W  = (max(max(W))-W)/(max(max(W))-min(min(W)));

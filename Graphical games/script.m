@@ -1,6 +1,6 @@
 % ====================== TO DO FIRST =========================
 %             DOWNLOAD KOLMOGOROV blossomV ALGORITHM
-%             AND CHANGE line 15 in edmonds2.m
+%                     running get_blossom.sh
 % ============================================================
 
 clear W
@@ -67,9 +67,9 @@ for n = nn
 	iter            = iter + 1;
 	Legend{end+1}		= sprintf('d= %d', n .* (n-1) ./ 2);
 end
-loglog(BIG{1},1:niter,'DisplayName',Legend{1})
+loglog(1:niter,BIG{1},'DisplayName',Legend{1})
 hold on
 for i =2:power_max-1
-	loglog(BIG{i},1:niter,'DisplayName',Legend{i})
+	loglog(1:niter,BIG{i},'DisplayName',Legend{i})
 end
 legend('show')

@@ -1,8 +1,8 @@
 # SPFW
 
-This is the code to reproduce our experiments in our [Axiv Paper](http://arxiv.org/):
+This is the code to reproduce our experiments in our [Paper](https://arxiv.org/abs/1610.07797):
 ```
-Frank-Wolfe Algorithm for Saddle Point Problem.
+Frank-Wolfe Algorithms for Saddle Point Problems.
 ```
 The project page of this article is ```http://www.di.ens.fr/sierra/research/SPFW/```.
 This project contains the implementation of SP-FW and SP-AFW on a strongly convex toy example (quadratic objective function with low dimentional constraints.
@@ -26,11 +26,11 @@ This code is not meant to be the most efficient. Our goal was to simply check if
 
 Please use the following BibTeX entry to cite this software in your work:
 ```
-@InProceedings{gidel2016saddle,
+@InProceedings{gidel2017saddle,
   author      = {Gidel, Gauthier and Jebara, Tony and Lacoste-Julien, Simon},
-  title       = {Frank-{W}olfe {A}lgorithms for {S}addle {P}oint {P}roblems},
-  booktitle   = {arXiv:1610.07797},
-  year        = {2016}
+  title       = {Frank-{W}olfe Algorithms for Saddle Point Problems},
+  booktitle   = {Proceedings of the 20th International Conference on Artificial Intelligence and Statistics (AISTATS)},
+  year        = {2017}
 }
 ```
 ##Authors
@@ -38,3 +38,6 @@ Please use the following BibTeX entry to cite this software in your work:
 * [Gauthier Gidel](http://www.di.ens.fr/~gidel/)
 * [Tony Jebara](http://www.cs.columbia.edu/~jebara/)
 * [Simon Lacoste-Julien](http://www.di.ens.fr/~slacoste/)
+
+## Octave
+The graphical games and the sparse structured SVM experiments work with [Octave](https://www.gnu.org/software/octave/) with very simple modification (basically just removing the random seed). Otherwise, the toy experiments need a hashmap function not directly available with Octave. We invite users who want to make this code working with Octave to implement similar functions as [containers.Map()](https://www.mathworks.com/help/matlab/ref/containers.map-class.html) MATLAB class or to use the [java package](https://www.gnu.org/software/octave/doc/interpreter/Java-Interface.html) to create java.util.Hashtable.

@@ -16,12 +16,11 @@ The code is organized as follows:
 ##Getting Started
 
 1. You need a working installation of Matlab.
-2. Clone the git repository.
-3. Obtain the data files required to run the demos. On Unix systems you can
+2. Obtain the data files required to run the demos. On Unix systems you can
    simply run `./fetch_data.sh`. On Windows, you can use
    [Cygwin](http://www.cygwin.com/) or manually download the listed files and
    put them in the data folder.
-4. For the OCR demo change to `demo/chain` and run `ocr` from within Matlab.
+3. In order to reproduce the plots `1e` and `1f` of [our paper](https://arxiv.org/abs/1610.07797) change to `demo/chain` and run `ocr1*.m` from within Matlab.
 
 
 ##Usage

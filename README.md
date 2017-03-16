@@ -14,15 +14,15 @@ There are three folders corresponding to the three paragraphs in our experiments
  - Sparse structured SVM. This folder is organized the same way as [BCFW](https://github.com/ppletscher/BCFWstruct).
 More details about these experiments in their respective README.
 
-##Aknowledgements
+## Aknowledgements
 
 We want to aknowledge [Simon Lacoste-Julien](http://www.di.ens.fr/~slacoste/), [Martin Jaggi](http://www.cmap.polytechnique.fr/~jaggi/), [Mark Schmidt](http://www.di.ens.fr/~mschmidt/) and [Patrick Pletscher](http://pletscher.org) for the open source code on [BCFW](https://github.com/ppletscher/BCFWstruct). Our code on OCR experiments in an extension of theirs.
 
-##Disclaimer
+## Disclaimer
 
 This code is not meant to be the most efficient. Our goal was to simply check if the experimental results matched with our theoretical analysis.
 
-##Citation
+## Citation
 
 Please use the following BibTeX entry to cite this software in your work:
 ```
@@ -33,7 +33,7 @@ Please use the following BibTeX entry to cite this software in your work:
   year        = {2017}
 }
 ```
-##Authors
+## Authors
 
 * [Gauthier Gidel](http://www.di.ens.fr/~gidel/)
 * [Tony Jebara](http://www.cs.columbia.edu/~jebara/)

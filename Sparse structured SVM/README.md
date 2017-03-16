@@ -1,4 +1,4 @@
-#SP-FWstruct
+# SP-FWstruct
 
 This README and its associated code mainly comes from ```https://github.com/ppletscher/BCFWstruct```
 
@@ -13,7 +13,7 @@ The code is organized as follows:
   demos.
 
 
-##Getting Started
+## Getting Started
 
 1. You need a working installation of Matlab.
 2. Obtain the data files required to run the demos. On Unix systems you can
@@ -23,7 +23,7 @@ The code is organized as follows:
 3. In order to reproduce the plots `1e` and `1f` of [our paper](https://arxiv.org/abs/1610.07797) change to `demo/chain` and run `ocr1*.m` from within Matlab.
 
 
-##Usage
+## Usage
 
 If you would like to use the SP-FW solvers for your own structured output
 prediction problem, you will need to implement three functions:
